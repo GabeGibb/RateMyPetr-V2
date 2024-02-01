@@ -1,10 +1,10 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+// Components
+import SearchForm from "./components/searchForm";
 
 export default function Home() {
 	return (
 		<main>
-			<div>Hello World!</div>
+			<SearchForm />
 		</main>
 	);
 }

@@ -1,11 +1,14 @@
+// Next Imports
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+// CSS
+import "./styles/globals.css";
+
+// Components
+import Navbar from "./components/navbar";
 
 export const metadata: Metadata = {
-	title: "RateMyPetr V2",
+	title: "RateMyPetr",
 	description: "Course rating website for UCI",
 };
 
@@ -16,7 +19,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>{children}</body>
+			<body>
+				<Navbar />
+				{children}
+			</body>
 		</html>
 	);
 }
