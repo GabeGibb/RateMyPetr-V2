@@ -1,13 +1,16 @@
 from fastapi import FastAPI
+from routes import review
 
 app = FastAPI()
 
-@app.get("/api")
+app.include_router(review.router)
+
+
+@app.get("/")
 async def root():
     return {"message": "Hello Worlds"}
 
-@app.get("/api/test")
+@app.get("/test")
 async def test():
     return {"message": "test"}
 
-#add a comment

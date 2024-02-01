@@ -1,12 +1,12 @@
 
-
-CREATE TABLE IF NOT EXISTS ratings (
-    id serial PRIMARY KEY,
-    class_id VARCHAR(100) NOT NULL,
-    enjoyment_rating INTEGER NOT NULL,
-    difficulty_rating INTEGER NOT NULL,
-    comment VARCHAR(300),
-    grade VARCHAR(20) NOT NULL,
-    added_timestamp timestamp default now(),
-    instructor_id VARCHAR(100) NOT NULL
-);
+create table
+  public.reviews (
+    id uuid not null default gen_random_uuid (),
+    created_at timestamp with time zone not null default now(),
+    enjoyment smallint not null,
+    difficulty smallint not null,
+    comment text null default ''::text,
+    grade character varying not null default ''::character varying,
+    professor_id character varying not null,
+    constraint reviews_pkey primary key (id)
+  ) tablespace pg_default;
