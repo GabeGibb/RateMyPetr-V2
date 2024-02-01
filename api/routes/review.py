@@ -4,18 +4,18 @@ from database import supabase
 
 router = APIRouter()
 
-@router.route('/reviews', methods=['GET'])
+@router.post('/reviews')
 def create_rating():
     return {'message': 'review created successfully'}
 
-@router.route('/reviews/<review_id>', methods=['GET'])
-def get_rating(rating_id):
+@router.get('/reviews/{review_id}')
+def get_rating(review_id):
     return supabase.table('reviews').select("*").execute()
 
-@router.route('/reviews/<review_id>', methods=['PUT'])
+@router.put('/reviews/{review_id}')
 def update_rating(rating_id):
     return {'message': 'review updated successfully'}
 
-@router.route('/reviews/<review_id>', methods=['DELETE'])
+@router.delete('/reviews/{review_id}')
 def delete_rating(rating_id):
     return {'message': 'review deleted successfully'}
