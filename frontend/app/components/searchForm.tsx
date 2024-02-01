@@ -1,35 +1,39 @@
 // MUI
-import { TextField, FormGroup } from "@mui/material";
-import {
-	createTheme,
-	ThemeProvider,
-	Theme,
-	useTheme,
-} from "@mui/material/styles";
-import { outlinedInputClasses } from "@mui/material/OutlinedInput";
+import { TextField, FormGroup, Box } from "@mui/material";
 
 // CSS
 import styles from "../styles/searchForm.module.css";
 
 export default function SearchForm() {
 	return (
-		<FormGroup className={styles.searchForm}>
-			<TextField
-				select
-				id="outlined-basic"
-				label="Outlined"
-				variant="outlined"
-			/>
-			<TextField
-				id="outlined-basic"
-				label="Outlined"
-				variant="outlined"
-			/>
-			<TextField
-				id="outlined-basic"
-				label="Outlined"
-				variant="outlined"
-			/>
-		</FormGroup>
+		<Box display="flex" justifyContent="center" alignItems="center">
+			<FormGroup>
+				<TextField
+					select
+					id="outlined-basic"
+					label="Outlined"
+					variant="outlined"
+					sx={{
+						width: 400,
+					}}
+				/>
+				<TextField
+					id="outlined-basic"
+					label="Outlined"
+					variant="outlined"
+					sx={{
+						width: 400,
+					}}
+				/>
+				<TextField
+					id="outlined-basic"
+					label="Outlined"
+					variant="outlined"
+					sx={{
+						width: 400,
+					}}
+				/>
+			</FormGroup>
+		</Box>
 	);
 }
