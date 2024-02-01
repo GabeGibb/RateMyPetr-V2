@@ -1,5 +1,5 @@
 // Components
-import SearchForm from "./components/searchForm";
+import SearchForm from "../components/searchForm";
 
 export default function Home() {
 	return (

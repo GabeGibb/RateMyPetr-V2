@@ -2,10 +2,10 @@
 import type { Metadata } from "next";
 
 // CSS
-import "./styles/globals.css";
+import "../styles/globals.css";
 
 // Components
-import Navbar from "./components/navbar";
+import Navbar from "../components/navbar";
 
 export const metadata: Metadata = {
 	title: "RateMyPetr",

@@ -1,0 +1,41 @@
+.textInput {
+	margin-top: 2rem;
+}
+
+.formContainer {
+	/* Border */
+	border: 2px solid rgb(0, 0, 0);
+	border-radius: 10px;
+
+	/* Margins */
+	margin-top: 2rem;
+	margin-left: 45rem;
+	margin-right: 45rem;
+
+	/* Padding */
+	padding-bottom: 2rem;
+	padding-left: 3rem;
+	padding-right: 3rem;
+
+	/* Colors */
+	background-color: #13181d;
+}
+
+.formTitle {
+	margin-top: 2rem;
+	text-align: center;
+
+	font-size: 1.6rem;
+
+	color: white;
+}
+
+.formBtn {
+	margin-top: 1rem;
+	width: 10rem;
+}
+
+.btnContainer {
+	display: flex;
+	justify-content: center;
+}
