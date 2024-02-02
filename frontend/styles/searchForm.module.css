@@ -8,9 +8,9 @@
 	border-radius: 10px;
 
 	/* Margins */
+    margin: auto;
+    max-width: 500px;
 	margin-top: 2rem;
-	margin-left: 45rem;
-	margin-right: 45rem;
 
 	/* Padding */
 	padding-bottom: 2rem;

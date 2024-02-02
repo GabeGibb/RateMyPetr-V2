@@ -30,7 +30,7 @@ def get_rating(review_id=None, professor_id=None, course_id=None):
     try:
         return {'message': 'review(s) found', 'reviews': query.execute().data}
     except:
-        return {'message': 'review not found'}
+        return {'message': 'review not found', 'reviews': []}
 
 #Update a review
 @router.put('/reviews')

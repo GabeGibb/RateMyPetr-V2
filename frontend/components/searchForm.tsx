@@ -26,7 +26,7 @@ const departments = [
 	},
 	{
 		value: "BTC",
-		label: "I&C SCI - Information and Computer Science",
+		label: "I&CSCI - Information and Computer Science",
 	},
 ];
 
@@ -59,7 +59,12 @@ const WhiteTextField = styled(TextField)({
 	},
 });
 
-export default function SearchForm() {
+export interface SearchFormProps {
+    handleSearch: () => Promise<void>;
+}
+
+
+const SearchForm: React.FC<SearchFormProps> = ( props ) => {
 	return (
 		<Box
 			className={styles.formContainer}
@@ -75,7 +80,7 @@ export default function SearchForm() {
 				<WhiteTextField
 					className={styles.textInput}
 					label="Department"
-					select>
+					>
 					{departments.map((option) => (
 						<MenuItem key={option.value} value={option.value}>
 							{option.label}
@@ -91,7 +96,7 @@ export default function SearchForm() {
 					label="Professor"
 				/>
 				<div className={styles.btnContainer}>
-					<Button variant="contained" className={styles.formBtn}>
+					<Button variant="contained" className={styles.formBtn} onClick={props.handleSearch}>
 						Search
 					</Button>
 				</div>
@@ -99,3 +104,5 @@ export default function SearchForm() {
 		</Box>
 	);
 }
+
+export default SearchForm;
