@@ -1,4 +1,6 @@
 "use client";
+//React
+import  { useState } from "react";
 
 // MUI
 import {
@@ -16,17 +18,21 @@ import { styled } from "@mui/material/styles";
 import styles from "../styles/searchForm.module.css";
 
 const departments = [
+    {
+        value: "",
+        label: "Department",
+    },
 	{
-		value: "USD",
+		value: "COMPSCI",
 		label: "COMPSCI - Computer Science",
 	},
 	{
-		value: "EUR",
+		value: "IN4MATX",
 		label: "IN4MATX - Informatics",
 	},
 	{
-		value: "BTC",
-		label: "I&CSCI - Information and Computer Science",
+		value: "I&CSCI",
+		label: "I&C SCI - Information and Computer Science",
 	},
 ];
 
@@ -60,18 +66,25 @@ const WhiteTextField = styled(TextField)({
 });
 
 export interface SearchFormProps {
-    handleSearch: () => Promise<void>;
+    handleSearch: (parameters: object) => Promise<void>;
 }
 
-
 const SearchForm: React.FC<SearchFormProps> = ( props ) => {
+    const [department, setDepartment] = useState("");
+    const [course_number, setCourseNumber] = useState("");
+
+    function searchClasses() {
+        let params: object = {
+            department,
+            course_number,
+        };
+
+        props.handleSearch(params);
+    }
+
 	return (
 		<Box
 			className={styles.formContainer}
-			// display="flex"
-			// flexDirection="row"
-			// justifyContent="center"
-			// alignItems="center"
 		>
 			<Typography className={styles.formTitle}>
 				Search a Course
@@ -80,7 +93,9 @@ const SearchForm: React.FC<SearchFormProps> = ( props ) => {
 				<WhiteTextField
 					className={styles.textInput}
 					label="Department"
-					>
+                    onChange={(e) => setDepartment(e.target.value)}
+                    defaultValue={''}
+					select>
 					{departments.map((option) => (
 						<MenuItem key={option.value} value={option.value}>
 							{option.label}
@@ -90,13 +105,14 @@ const SearchForm: React.FC<SearchFormProps> = ( props ) => {
 				<WhiteTextField
 					className={styles.textInput}
 					label="Course Number (EX: 45C)"
+                    onChange={(e) => setCourseNumber(e.target.value)}
 				/>
 				<WhiteTextField
 					className={styles.textInput}
 					label="Professor"
 				/>
 				<div className={styles.btnContainer}>
-					<Button variant="contained" className={styles.formBtn} onClick={props.handleSearch}>
+					<Button variant="contained" className={styles.formBtn} onClick={searchClasses}>
 						Search
 					</Button>
 				</div>

@@ -1,10 +1,18 @@
 import React from 'react';
+
+//MUI
+import { styled } from "@mui/material/styles";
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+
+const StyledTableCell = styled(TableCell)({
+    color: 'white',
+    borderBottom: '1px solid #30363d',
+});
 
 interface CourseTableRowProps {
     course_id: string;
-    enjoyment: number;
-    difficulty: number;
+    enjoyment: string;
+    difficulty: string;
     averageGrade: string;
 }
 
@@ -13,10 +21,10 @@ const CourseTableRow: React.FC<CourseTableRowProps> = (props) => {
     return (
         <TableRow>
             {/* Render the row content here */}
-            <TableCell>{props.course_id}</TableCell>
-            <TableCell>{props.enjoyment}</TableCell>
-            <TableCell>{props.difficulty}</TableCell>
-            <TableCell>{props.averageGrade}</TableCell>
+            <StyledTableCell>{props.course_id}</StyledTableCell>
+            <StyledTableCell>{props.enjoyment}</StyledTableCell>
+            <StyledTableCell>{props.difficulty}</StyledTableCell>
+            <StyledTableCell>{props.averageGrade}</StyledTableCell>
         </TableRow>
     );
 };
@@ -31,12 +39,12 @@ const CourseTable: React.FC<CourseTableProps> = (props) => {
     return (
         <Table>
             <TableHead>
-                <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Enjoyment</TableCell>
-                    <TableCell>Difficulty</TableCell>
-                    <TableCell>Average Grade</TableCell>
-                </TableRow>
+                <CourseTableRow
+                    course_id="Name"
+                    enjoyment="Enjoyment"
+                    difficulty="Difficulty"
+                    averageGrade="Average Grade"
+                />
             </TableHead>
             <TableBody>
                 {props.courses.map((course, index) => (

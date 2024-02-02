@@ -19,14 +19,17 @@ def create_rating(review: Review):
 
 #Retrieve reviews
 @router.get('/reviews')
-def get_rating(review_id=None, professor_id=None, course_id=None):
+def get_rating(review_id=None, professor_id=None, department=None, course_number=None):
     query = supabase.table('reviews').select('*')
     if review_id:
         query = query.eq('id', id)
     if professor_id:
         query = query.eq('professor_id', professor_id)
-    if course_id:
-        query = query.eq('course_id', course_id)
+    if department:
+        query = query.like('course_id', f'%{department}%')
+    print(course_number)
+    if course_number:
+        query = query.like('course_id', f'%{course_number}%')
     try:
         return {'message': 'review(s) found', 'reviews': query.execute().data}
     except:
