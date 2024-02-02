@@ -1,10 +1,11 @@
 from pydantic import BaseModel
 
 class Review(BaseModel):
-    id: str
-    created_at: str
+    id: str = None
+    created_at: str = None
     enjoyment: int
     difficulty: int
-    comment: str
+    comment: str = ''
     grade: str
     professor_id: str
+    course_id: str
