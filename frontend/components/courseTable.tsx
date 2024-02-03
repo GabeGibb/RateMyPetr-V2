@@ -17,9 +17,12 @@ interface CourseTableRowProps {
 }
 
 const CourseTableRow: React.FC<CourseTableRowProps> = (props) => {
+    function routeToReview(){
+        window.location.href = `/review/?course_id=${props.course_id}`;
+    }
     // Implement the row component logic here
     return (
-        <TableRow>
+        <TableRow onClick={routeToReview}>
             {/* Render the row content here */}
             <StyledTableCell>{props.course_id}</StyledTableCell>
             <StyledTableCell>{props.enjoyment}</StyledTableCell>

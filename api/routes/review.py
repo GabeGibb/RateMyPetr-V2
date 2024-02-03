@@ -3,6 +3,9 @@ from models.review import Review
 from database import supabase
 
 router = APIRouter()
+#================================================================================================
+#CREATE
+#================================================================================================
 
 #Create a new review
 @router.post('/reviews')
@@ -17,7 +20,11 @@ def create_rating(review: Review):
     except:
         return {'message': 'review not created'}
 
-#Retrieve reviews
+#================================================================================================
+#READ
+#================================================================================================
+    
+#Retrieve AVERAGE REVIEWS based on search
 @router.get('/reviews')
 def get_rating(review_id=None, professor_id=None, department=None, course_number=None):
     query = supabase.table('reviews').select('*')
@@ -27,14 +34,41 @@ def get_rating(review_id=None, professor_id=None, department=None, course_number
         query = query.eq('professor_id', professor_id)
     if department:
         query = query.like('course_id', f'%{department}%')
-    print(course_number)
     if course_number:
         query = query.like('course_id', f'%{course_number}%')
+    
     try:
-        return {'message': 'review(s) found', 'reviews': query.execute().data}
+        return {'message': 'reviews found', 'reviews': query.execute().data}
     except:
         return {'message': 'review not found', 'reviews': []}
 
+# #Retrieve reviews for a specific course
+# @router.get('/reviews/{course_id}')
+# def get_rating(course_id=None):
+#     query = supabase.table('reviews').select('*').eq('course_id', course_id)
+#     try:
+#         return {'message': 'reviews found', 'reviews': query.execute().data}
+#     except:
+#         return {'message': 'review not found', 'reviews': []}
+    
+# @router.get('/reviews/stats')
+# def get_all_course_stats():
+#     try:
+#         query = """
+#         select course_id, AVG(enjoyment) as avgEnjoyment, AVG(difficulty) as avgDifficulty, COUNT(*)
+#         FROM reviews
+#         GROUP BY course_id
+#         """
+#         # query = supabase.table('reviews').select('course_id, avg(enjoyment), avg(difficulty), avg(grade), count(id)').group('course_id')
+#         response = supabase.query(query).execute()
+#         return {'message': 'stats found', 'stats': response.data}
+#     except Exception as e:
+#         print(e)
+#         return {'message': 'stats not found', 'stats': {}}
+#================================================================================================
+#UPDATE
+#================================================================================================
+    
 #Update a review
 @router.put('/reviews')
 def update_rating(review: Review):
@@ -52,6 +86,11 @@ def update_rating(review: Review):
     else:
         return {'message': 'review not found'}
 
+
+#================================================================================================
+#DELETE
+#================================================================================================
+    
 #Delete a review
 @router.delete('/reviews/{review_id}')
 def delete_rating(review_id):
