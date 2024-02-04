@@ -1,6 +1,7 @@
 from fastapi import APIRouter 
 from models.review import Review
 from database import supabase
+import psycopg2
 
 router = APIRouter()
 #================================================================================================
@@ -26,7 +27,7 @@ def create_rating(review: Review):
     
 #Retrieve AVERAGE REVIEWS based on search
 @router.get('/reviews')
-def get_rating(review_id=None, professor_id=None, department=None, course_number=None):
+def get_rating(review_id=None, professor_id=None, department=None, course_number=None, average='false'):
     query = supabase.table('reviews').select('*')
     if review_id:
         query = query.eq('id', id)
@@ -36,35 +37,41 @@ def get_rating(review_id=None, professor_id=None, department=None, course_number
         query = query.like('course_id', f'%{department}%')
     if course_number:
         query = query.like('course_id', f'%{course_number}%')
+    response = query.execute().data
     
+    # if average == 'true':
+    #     courses = {}
+    #     # gradesDict = {'A': 4, 'B': 3, 'C': 2, 'D': 1, 'F': 0}
+    #     for review in response:
+    #         if review['course_id'] in courses:
+    #             courses[review['course_id']]['enjoyment'] = (courses[review['course_id']]['enjoyment'] + review['enjoyment']) / 2
+    #             courses[review['course_id']]['difficulty'] = (courses[review['course_id']]['difficulty'] + review['difficulty']) / 2
+    #             # courses[review['course_id']]['grade'] = (courses[review['course_id']]['grade'] + gradesDict[review['grade']]) / 2
+    #             courses[review['course_id']]['total_reviews'] += 1
+    #         else:
+    #             courses[review['course_id']] = {
+    #                 'enjoyment': review['enjoyment'],
+    #                 'difficulty': review['difficulty'],
+    #                 # 'grade': gradesDict[review['grade']],
+    #                 'total_reviews': 1
+    #             }
+    #     response = courses
+
+    try:
+        return {'message': 'reviews found', 'reviews': response}
+    except:
+        return {'message': 'review not found', 'reviews': []}
+
+#Retrieve reviews for a specific course
+@router.get('/reviews/{course_id}')
+def get_rating(course_id=None):
+    query = supabase.table('reviews').select('*').eq('course_id', course_id)
     try:
         return {'message': 'reviews found', 'reviews': query.execute().data}
     except:
         return {'message': 'review not found', 'reviews': []}
-
-# #Retrieve reviews for a specific course
-# @router.get('/reviews/{course_id}')
-# def get_rating(course_id=None):
-#     query = supabase.table('reviews').select('*').eq('course_id', course_id)
-#     try:
-#         return {'message': 'reviews found', 'reviews': query.execute().data}
-#     except:
-#         return {'message': 'review not found', 'reviews': []}
     
-# @router.get('/reviews/stats')
-# def get_all_course_stats():
-#     try:
-#         query = """
-#         select course_id, AVG(enjoyment) as avgEnjoyment, AVG(difficulty) as avgDifficulty, COUNT(*)
-#         FROM reviews
-#         GROUP BY course_id
-#         """
-#         # query = supabase.table('reviews').select('course_id, avg(enjoyment), avg(difficulty), avg(grade), count(id)').group('course_id')
-#         response = supabase.query(query).execute()
-#         return {'message': 'stats found', 'stats': response.data}
-#     except Exception as e:
-#         print(e)
-#         return {'message': 'stats not found', 'stats': {}}
+
 #================================================================================================
 #UPDATE
 #================================================================================================

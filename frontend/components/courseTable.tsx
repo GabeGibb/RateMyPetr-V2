@@ -13,7 +13,7 @@ interface CourseTableRowProps {
     course_id: string;
     enjoyment: string;
     difficulty: string;
-    averageGrade: string;
+    total_reviews: string;
 }
 
 const CourseTableRow: React.FC<CourseTableRowProps> = (props) => {
@@ -27,7 +27,7 @@ const CourseTableRow: React.FC<CourseTableRowProps> = (props) => {
             <StyledTableCell>{props.course_id}</StyledTableCell>
             <StyledTableCell>{props.enjoyment}</StyledTableCell>
             <StyledTableCell>{props.difficulty}</StyledTableCell>
-            <StyledTableCell>{props.averageGrade}</StyledTableCell>
+            <StyledTableCell>{props.total_reviews}</StyledTableCell>
         </TableRow>
     );
 };
@@ -46,7 +46,7 @@ const CourseTable: React.FC<CourseTableProps> = (props) => {
                     course_id="Name"
                     enjoyment="Enjoyment"
                     difficulty="Difficulty"
-                    averageGrade="Average Grade"
+                    total_reviews="Reviews"
                 />
             </TableHead>
             <TableBody>
@@ -56,7 +56,7 @@ const CourseTable: React.FC<CourseTableProps> = (props) => {
                         course_id={course.course_id}
                         enjoyment={course.enjoyment}
                         difficulty={course.difficulty}
-                        averageGrade={course.averageGrade}
+                        total_reviews={course.total_reviews}
                     />
                 ))}
             </TableBody>
