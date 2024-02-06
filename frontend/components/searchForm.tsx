@@ -1,6 +1,6 @@
 "use client";
 //React
-import  { useState } from "react";
+import { useState } from "react";
 
 // MUI
 import {
@@ -18,10 +18,10 @@ import { styled } from "@mui/material/styles";
 import styles from "../styles/searchForm.module.css";
 
 const departments = [
-    {
-        value: "",
-        label: "Department",
-    },
+	{
+		value: "",
+		label: "Department",
+	},
 	{
 		value: "COMPSCI",
 		label: "COMPSCI - Computer Science",
@@ -40,9 +40,6 @@ const WhiteTextField = styled(TextField)({
 	"& label": {
 		color: "#d1d1d1",
 	},
-	// "&:hover label": {
-	// 	fontWeight: 700,
-	// },
 	"& label.Mui-focused": {
 		color: "white",
 	},
@@ -65,27 +62,25 @@ const WhiteTextField = styled(TextField)({
 	},
 });
 
-export interface SearchFormProps {
-    handleSearch: (parameters: object) => Promise<void>;
+interface SearchFormProps {
+	handleSearch: (
+		department: string,
+		professor: string,
+		courseCode: string
+	) => Promise<void>;
 }
 
-const SearchForm: React.FC<SearchFormProps> = ( props ) => {
-    const [department, setDepartment] = useState("");
-    const [course_number, setCourseNumber] = useState("");
+const SearchForm = ({ handleSearch }: SearchFormProps) => {
+	const [department, setDepartment] = useState("");
+	const [courseNumber, setCourseNumber] = useState("");
+	const [professor, setProfessor] = useState("");
 
-    function searchClasses() {
-        let params: object = {
-            department,
-            course_number,
-        };
-
-        props.handleSearch(params);
-    }
+	const submitSearchForm = () => {
+		handleSearch(department, professor, courseNumber);
+	};
 
 	return (
-		<Box
-			className={styles.formContainer}
-		>
+		<Box className={styles.formContainer}>
 			<Typography className={styles.formTitle}>
 				Search a Course
 			</Typography>
@@ -93,8 +88,8 @@ const SearchForm: React.FC<SearchFormProps> = ( props ) => {
 				<WhiteTextField
 					className={styles.textInput}
 					label="Department"
-                    onChange={(e) => setDepartment(e.target.value)}
-                    defaultValue={''}
+					onChange={(e) => setDepartment(e.target.value)}
+					defaultValue={""}
 					select>
 					{departments.map((option) => (
 						<MenuItem key={option.value} value={option.value}>
@@ -105,20 +100,24 @@ const SearchForm: React.FC<SearchFormProps> = ( props ) => {
 				<WhiteTextField
 					className={styles.textInput}
 					label="Course Number (EX: 45C)"
-                    onChange={(e) => setCourseNumber(e.target.value)}
+					onChange={(e) => setCourseNumber(e.target.value)}
 				/>
 				<WhiteTextField
 					className={styles.textInput}
 					label="Professor"
+					onChange={(e) => setProfessor(e.target.value)}
 				/>
 				<div className={styles.btnContainer}>
-					<Button variant="contained" className={styles.formBtn} onClick={searchClasses}>
+					<Button
+						variant="contained"
+						className={styles.formBtn}
+						onClick={submitSearchForm}>
 						Search
 					</Button>
 				</div>
 			</FormGroup>
 		</Box>
 	);
-}
+};
 
 export default SearchForm;

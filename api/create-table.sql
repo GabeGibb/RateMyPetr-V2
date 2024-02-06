@@ -1,4 +1,3 @@
-
 create table
   public.reviews (
     id uuid not null default gen_random_uuid (),
