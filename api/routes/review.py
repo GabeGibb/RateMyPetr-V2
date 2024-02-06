@@ -28,7 +28,10 @@ def create_rating(review: Review):
 #Retrieve AVERAGE REVIEWS based on search
 @router.get('/reviews')
 def get_rating(review_id=None, professor_id=None, department=None, course_number=None, average='false'):
-    query = supabase.table('reviews').select('*')
+    table_name = 'reviews'
+    if average == 'true':
+        table_name = 'review_averages'
+    query = supabase.table(table_name).select('*')
     if review_id:
         query = query.eq('id', id)
     if professor_id:
@@ -37,25 +40,8 @@ def get_rating(review_id=None, professor_id=None, department=None, course_number
         query = query.like('course_id', f'%{department}%')
     if course_number:
         query = query.like('course_id', f'%{course_number}%')
+
     response = query.execute().data
-    
-    # if average == 'true':
-    #     courses = {}
-    #     # gradesDict = {'A': 4, 'B': 3, 'C': 2, 'D': 1, 'F': 0}
-    #     for review in response:
-    #         if review['course_id'] in courses:
-    #             courses[review['course_id']]['enjoyment'] = (courses[review['course_id']]['enjoyment'] + review['enjoyment']) / 2
-    #             courses[review['course_id']]['difficulty'] = (courses[review['course_id']]['difficulty'] + review['difficulty']) / 2
-    #             # courses[review['course_id']]['grade'] = (courses[review['course_id']]['grade'] + gradesDict[review['grade']]) / 2
-    #             courses[review['course_id']]['total_reviews'] += 1
-    #         else:
-    #             courses[review['course_id']] = {
-    #                 'enjoyment': review['enjoyment'],
-    #                 'difficulty': review['difficulty'],
-    #                 # 'grade': gradesDict[review['grade']],
-    #                 'total_reviews': 1
-    #             }
-    #     response = courses
 
     try:
         return {'message': 'reviews found', 'reviews': response}
