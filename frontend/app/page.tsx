@@ -14,7 +14,7 @@ export default function Home() {
 		courseCode: string
 	) => {
 		const queryElements = [department, professor, courseCode];
-		const queryKeys = ["department", "professor", "course_id"];
+		const queryKeys = ["department", "professor", "course_number"];
 		let queryParams = "";
 
 		for (let i = 0; i < 3; i++) {
@@ -26,8 +26,8 @@ export default function Home() {
 		}
 
 		queryParams = queryParams.slice(0, -1);
-
-		const url = `api/reviews?${queryParams}`;
+        console.log(queryParams);
+		const url = `api/reviews?average=true&${queryParams}`;
 		console.log(url);
 		const response = await fetch(url);
 		const reviews = await response.json();

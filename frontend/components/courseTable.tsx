@@ -11,8 +11,8 @@ const StyledTableCell = styled(TableCell)({
 
 interface CourseTableRowProps {
     course_id: string;
-    enjoyment: string;
-    difficulty: string;
+    avg_enjoyment: string;
+    avg_difficulty: string;
     total_reviews: string;
 }
 
@@ -25,8 +25,8 @@ const CourseTableRow: React.FC<CourseTableRowProps> = (props) => {
         <TableRow onClick={routeToReview}>
             {/* Render the row content here */}
             <StyledTableCell>{props.course_id}</StyledTableCell>
-            <StyledTableCell>{props.enjoyment}</StyledTableCell>
-            <StyledTableCell>{props.difficulty}</StyledTableCell>
+            <StyledTableCell>{props.avg_enjoyment}</StyledTableCell>
+            <StyledTableCell>{props.avg_difficulty}</StyledTableCell>
             <StyledTableCell>{props.total_reviews}</StyledTableCell>
         </TableRow>
     );
@@ -40,12 +40,18 @@ interface CourseTableProps {
 const CourseTable: React.FC<CourseTableProps> = (props) => {
     // Implement the table component logic here
     return (
-        <Table>
+        <Table sx={{
+            maxWidth: '75%',
+            margin: 'auto',
+            '@media (max-width: 600px)': {
+                maxWidth: '90%',
+            },
+        }}>
             <TableHead>
                 <CourseTableRow
                     course_id="Name"
-                    enjoyment="Enjoyment"
-                    difficulty="Difficulty"
+                    avg_enjoyment="Enjoyment"
+                    avg_difficulty="Difficulty"
                     total_reviews="Reviews"
                 />
             </TableHead>
@@ -54,8 +60,8 @@ const CourseTable: React.FC<CourseTableProps> = (props) => {
                     <CourseTableRow
                         key={index}
                         course_id={course.course_id}
-                        enjoyment={course.enjoyment}
-                        difficulty={course.difficulty}
+                        avg_enjoyment={course.avg_enjoyment}
+                        avg_difficulty={course.avg_difficulty}
                         total_reviews={course.total_reviews}
                     />
                 ))}
