@@ -1,10 +1,17 @@
-import Image from "next/image";
-import styles from "../../styles/page.module.css";
+'use client'
+
+import ReviewForm from "@/components/reviewForm";
+import { useSearchParams } from 'next/navigation'
 
 export default function Home() {
-	return (
-		<main>
-			<div>Review Page</div>
-		</main>
-	);
+    const searchParams = useSearchParams()
+
+    const course_id = searchParams.get('course_id')
+    // TODO: get reviews / professors from course_id
+
+    return (
+        <main>
+            <ReviewForm professors={['test1', 'test2']}></ReviewForm>
+        </main>
+    );
 }

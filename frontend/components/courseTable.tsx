@@ -4,6 +4,7 @@ import React from 'react';
 import { styled } from "@mui/material/styles";
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 
+
 const StyledTableCell = styled(TableCell)({
     color: 'white',
     borderBottom: '1px solid #30363d',
@@ -41,11 +42,14 @@ const CourseTable: React.FC<CourseTableProps> = (props) => {
     // Implement the table component logic here
     return (
         <Table sx={{
-            maxWidth: '75%',
-            margin: 'auto',
-            '@media (max-width: 600px)': {
-                maxWidth: '90%',
+            maxWidth:{
+                xs: '90%',
+                sm: '75%',
             },
+            margin: 'auto',
+            text: {
+                color: '#ffffff',
+            }
         }}>
             <TableHead>
                 <CourseTableRow

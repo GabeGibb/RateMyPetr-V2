@@ -7,6 +7,10 @@ import "../styles/globals.css";
 // Components
 import Navbar from "../components/navbar";
 
+//MUI
+import { ThemeProvider } from '@mui/material/styles';
+import {globalTheme} from '@/styles/globalTheme';
+
 export const metadata: Metadata = {
 	title: "RateMyPetr",
 	description: "Course rating website for UCI",
@@ -20,8 +24,10 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<Navbar />
-				{children}
+                <ThemeProvider theme={globalTheme}>
+                    <Navbar />
+                    {children}
+                </ThemeProvider>
 			</body>
 		</html>
 	);
