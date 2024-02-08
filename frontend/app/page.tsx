@@ -26,9 +26,7 @@ export default function Home() {
 		}
 
 		queryParams = queryParams.slice(0, -1);
-        console.log(queryParams);
 		const url = `api/reviews?average=true&${queryParams}`;
-		console.log(url);
 		const response = await fetch(url);
 		const reviews = await response.json();
 		console.log(reviews);

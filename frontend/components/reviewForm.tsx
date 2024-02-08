@@ -10,15 +10,30 @@ import Rating from '@mui/material/Rating';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+import { Unstable_Popup as BasePopup } from '@mui/base/Unstable_Popup';
+import { ClickAwayListener } from '@mui/base/ClickAwayListener';
+
+interface Professor {
+    ucinetid: string;
+    name: string;
+    shortenedName: string;
+}
 
 interface ReviewFormProps {
-    professors : string[];
+    professors : Professor[];
+    course_id: string;
 }
 
 
 const ReviewForm: React.FC<ReviewFormProps> = (props) =>{
     const [showForm, setShowForm] = useState(true);
+    
+    //Popup
+    const [anchor, setAnchor] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchor);
+    const id = open ? 'popup' : undefined;
 
+    //Form
     const [professor, setProfessor] = useState('');
     const [difficulty, setDifficulty] = useState<number | null>(3);
     const [enjoyment, setEnjoyment] = useState<number | null>(3);
@@ -31,17 +46,46 @@ const ReviewForm: React.FC<ReviewFormProps> = (props) =>{
     };
 
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const togglePopup = (event: React.MouseEvent<HTMLElement>) => {
+        // Handle popup logic here
+        setAnchor(event.currentTarget);
+        setTimeout(() => { setAnchor(null); }, 3000);
+    };
+    
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // Handle form submission logic here
-        console.log('Review submitted:');
-        console.log(professor)
-        console.log(difficulty)
-        console.log(enjoyment)
-        console.log(grade)
-        console.log(comment)
-        // setComment('');
-        // setShowForm(false);
+        
+        if (!professor || difficulty === null || enjoyment === null || !grade || !comment) {
+            // SHOW ERROR
+            return;
+        }
+
+        const newReview = {
+            professor_id: professor,
+            difficulty,
+            enjoyment,
+            grade,
+            comment,
+            course_id: props.course_id
+        };
+
+
+        const response = await fetch('/api/reviews', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newReview)
+        });
+
+        if (response.ok) {
+            setShowForm(false);
+            // TODO: Show success message
+        } else {
+            alert("UH OH SOMETHING WENT WRONG")
+        }
+
     };
 
     return (
@@ -59,8 +103,8 @@ const ReviewForm: React.FC<ReviewFormProps> = (props) =>{
                     onChange={(e) => setProfessor(e.target.value)}
                     autoWidth
                     >
-                        {props.professors.map((professor: string) => (
-                            <MenuItem key={professor} value={professor}>{professor}</MenuItem>
+                        {props.professors.map((professor: Professor) => (
+                            <MenuItem key={professor.ucinetid} value={professor.ucinetid}>{professor.name}</MenuItem>
                         ))}
                         
                     </Select>
@@ -110,9 +154,14 @@ const ReviewForm: React.FC<ReviewFormProps> = (props) =>{
                             },
                           }}
                     />
-                    <Button type="submit" variant="contained">
+                    <Button type="submit" aria-describedby={id} variant="contained" onClick={togglePopup}>
                         Submit
                     </Button>
+                    <BasePopup id={id} open={open} anchor={anchor}>
+                        <Box sx={{ color: 'white' }}>
+                            Fill out all fields
+                        </Box>
+                    </BasePopup>
                 </form>
             )}
         </Box>

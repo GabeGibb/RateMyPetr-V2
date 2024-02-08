@@ -27,7 +27,7 @@ def create_rating(review: Review):
     
 #Retrieve AVERAGE REVIEWS based on search
 @router.get('/reviews')
-def get_rating(review_id=None, professor_id=None, department=None, course_number=None, average='false'):
+def get_rating(review_id=None, professor_id=None, department=None, course_number=None, average='false', course_id=None):
     table_name = 'reviews'
     if average == 'true':
         table_name = 'review_averages'
@@ -40,6 +40,8 @@ def get_rating(review_id=None, professor_id=None, department=None, course_number
         query = query.like('course_id', f'%{department}%')
     if course_number:
         query = query.like('course_id', f'%{course_number}%')
+    if course_id:
+        query = query.eq('course_id', course_id)
 
     response = query.execute().data
 
