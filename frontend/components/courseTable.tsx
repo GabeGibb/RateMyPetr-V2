@@ -1,14 +1,8 @@
 import React from 'react';
 
 //MUI
-import { styled } from "@mui/material/styles";
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 
-
-const StyledTableCell = styled(TableCell)({
-    color: 'white',
-    borderBottom: '1px solid #30363d',
-});
 
 interface CourseTableRowProps {
     course_id: string;
@@ -25,10 +19,10 @@ const CourseTableRow: React.FC<CourseTableRowProps> = (props) => {
     return (
         <TableRow onClick={routeToReview}>
             {/* Render the row content here */}
-            <StyledTableCell>{props.course_id}</StyledTableCell>
-            <StyledTableCell>{props.avg_enjoyment}</StyledTableCell>
-            <StyledTableCell>{props.avg_difficulty}</StyledTableCell>
-            <StyledTableCell>{props.total_reviews}</StyledTableCell>
+            <TableCell>{props.course_id}</TableCell>
+            <TableCell>{props.avg_enjoyment}</TableCell>
+            <TableCell>{props.avg_difficulty}</TableCell>
+            <TableCell>{props.total_reviews}</TableCell>
         </TableRow>
     );
 };

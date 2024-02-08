@@ -12,7 +12,7 @@ import {
 	Button,
 	Stack,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
+
 
 // CSS
 import styles from "../styles/searchForm.module.css";
@@ -35,32 +35,6 @@ const departments = [
 		label: "I&C SCI - Information and Computer Science",
 	},
 ];
-
-const WhiteTextField = styled(TextField)({
-	"& label": {
-		color: "#d1d1d1",
-	},
-	"& label.Mui-focused": {
-		color: "white",
-	},
-	// Text Input Border
-	"& .MuiOutlinedInput-root": {
-		color: "white",
-		"& fieldset": {
-			borderColor: "white",
-		},
-		"&:hover fieldset": {
-			borderColor: "white",
-			borderWidth: 2,
-		},
-		"&.Mui-focused fieldset": {
-			borderColor: "white",
-		},
-	},
-	"& .MuiSelect-icon": {
-		color: "white",
-	},
-});
 
 interface SearchFormProps {
 	handleSearch: (
@@ -85,7 +59,7 @@ const SearchForm = ({ handleSearch }: SearchFormProps) => {
 				Search a Course
 			</Typography>
 			<FormGroup>
-				<WhiteTextField
+				<TextField
 					className={styles.textInput}
 					label="Department"
 					onChange={(e) => setDepartment(e.target.value)}
@@ -96,13 +70,13 @@ const SearchForm = ({ handleSearch }: SearchFormProps) => {
 							{option.label}
 						</MenuItem>
 					))}
-				</WhiteTextField>
-				<WhiteTextField
+				</TextField>
+				<TextField
 					className={styles.textInput}
 					label="Course Number (EX: 45C)"
 					onChange={(e) => setCourseNumber(e.target.value)}
 				/>
-				<WhiteTextField
+				<TextField
 					className={styles.textInput}
 					label="Professor"
 					onChange={(e) => setProfessor(e.target.value)}

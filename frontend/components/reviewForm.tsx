@@ -7,11 +7,11 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
-import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import { Unstable_Popup as BasePopup } from '@mui/base/Unstable_Popup';
-import { ClickAwayListener } from '@mui/base/ClickAwayListener';
+import FormGroup from '@mui/material/FormGroup';
+import { Paper } from '@mui/material';
 
 interface Professor {
     ucinetid: string;
@@ -46,18 +46,12 @@ const ReviewForm: React.FC<ReviewFormProps> = (props) =>{
     };
 
 
-    const togglePopup = (event: React.MouseEvent<HTMLElement>) => {
-        // Handle popup logic here
-        setAnchor(event.currentTarget);
-        setTimeout(() => { setAnchor(null); }, 3000);
-    };
-    
-
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
         
         if (!professor || difficulty === null || enjoyment === null || !grade || !comment) {
-            // SHOW ERROR
+            setAnchor(event.currentTarget);
+            setTimeout(() => { setAnchor(null); }, 3000);
             return;
         }
 
@@ -89,27 +83,13 @@ const ReviewForm: React.FC<ReviewFormProps> = (props) =>{
     };
 
     return (
-        <Box sx={{ color: 'white' }}>
+        <Box>
             <Button variant="contained" onClick={handleButtonClick}>
                 {showForm ? 'Hide Form' : 'Leave a Review'}
             </Button>
             {showForm && (
-                <form onSubmit={handleSubmit}>
-                    <InputLabel id="prof-label" sx={{ color: 'white' }}>Professor</InputLabel>
-                    <Select
-                    value={professor}
-                    sx={{ color: 'white' }}
-                    labelId="prof-label"
-                    onChange={(e) => setProfessor(e.target.value)}
-                    autoWidth
-                    >
-                        {props.professors.map((professor: Professor) => (
-                            <MenuItem key={professor.ucinetid} value={professor.ucinetid}>{professor.name}</MenuItem>
-                        ))}
-                        
-                    </Select>
-
-                    <Typography component="legend">Difficulty</Typography>
+                <FormGroup>
+                    <Typography>Difficulty</Typography>
                     <Rating 
                         name="difficulty-rating"  
                         value={difficulty}
@@ -122,20 +102,31 @@ const ReviewForm: React.FC<ReviewFormProps> = (props) =>{
                         value={enjoyment}
                         onChange={(e, value) => setEnjoyment(value)}
                     />
-                    <InputLabel id="grade-label" sx={{ color: 'white' }}>Grade</InputLabel>
-                    <Select
+                    <TextField
+                    value={professor}
+                    label="Professor"
+                    onChange={(e) => setProfessor(e.target.value)}
+                    select
+                    >
+                        {props.professors.map((professor: Professor) => (
+                            <MenuItem key={professor.ucinetid} value={professor.ucinetid}>{professor.name}</MenuItem>
+                        ))}
+                        
+                    </TextField>
+
+                    <InputLabel>Grade</InputLabel>
+                    <TextField
                     value={grade}
-                    sx={{ color: 'white' }}
-                    labelId="grade-label"
+                    label="Grade"
                     onChange={(e) => setGrade(e.target.value)}
-                    autoWidth
+                    select
                     >
                         <MenuItem value={'A'}>A</MenuItem>
                         <MenuItem value={'B'}>B</MenuItem>
                         <MenuItem value={'C'}>C</MenuItem>
                         <MenuItem value={'D'}>D</MenuItem>
                         <MenuItem value={'F'}>F</MenuItem>
-                    </Select>
+                    </TextField>
 
                     <TextField
                         label="Comment"
@@ -143,26 +134,16 @@ const ReviewForm: React.FC<ReviewFormProps> = (props) =>{
                         multiline
                         rows={4}
                         fullWidth
-                        InputProps={{
-                            sx: {
-                              color: 'white', // sets the color of input text
-                            },
-                          }}
-                          InputLabelProps={{
-                            sx: {
-                              color: 'white', // sets the color of the label
-                            },
-                          }}
                     />
-                    <Button type="submit" aria-describedby={id} variant="contained" onClick={togglePopup}>
+                    <Button type="submit" aria-describedby={id} variant="contained" onClick={handleSubmit}>
                         Submit
                     </Button>
                     <BasePopup id={id} open={open} anchor={anchor}>
-                        <Box sx={{ color: 'white' }}>
+                        <Paper sx={{color: 'black'}}>
                             Fill out all fields
-                        </Box>
+                        </Paper>
                     </BasePopup>
-                </form>
+                </FormGroup>
             )}
         </Box>
     );
